@@ -1,0 +1,30 @@
+# .gitignore for Node.js Project
+
+# 1. 의존성 폴더 (가장 중요!)
+# 이 폴더는 npm install을 통해 언제든 재생성할 수 있습니다.
+node_modules/
+
+# 2. 로그 파일
+# 실행 중 생성되는 로그는 저장할 필요가 없습니다.
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 3. 환경 변수 파일 (보안!)
+# DB 접속 정보, API 키 등 민감한 정보를 담고 있습니다. 절대 커밋하면 안됩니다.
+.env
+.env.local
+
+# 4. 빌드 결과물
+# 컴파일되거나 빌드된 결과물은 원본 소스 코드가 아니므로 제외합니다.
+dist/
+build/
+
+# 5. OS 및 시스템 파일
+.DS_Store
+Thumbs.db
+
+# 6. IDE 설정 파일 (선택사항)
+.idea/
+.vscode/
