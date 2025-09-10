@@ -1,0 +1,105 @@
+/* --- 기본 스타일 초기화 --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- 전체 페이지 스타일 --- */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  /* 구글 폰트 적용 */
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+body {
+  /* Flexbox를 이용해 자식 요소를 완벽한 중앙으로 배치 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa; /* 부드러운 회색 배경 */
+  color: #343a40; /* 기본 글자 색상 */
+}
+
+/* --- 콘텐츠를 담을 컨테이너 --- */
+.container {
+  text-align: center;
+  padding: 40px;
+  border-radius: 15px;
+  background-color: #ffffff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* 입체감을 주는 그림자 */
+  transform: translateY(-20px); /* 살짝 위로 올라온 효과 */
+  transition: all 0.3s ease;
+}
+
+/* --- 아이콘 스타일 --- */
+.icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+  /* 아이콘이 살짝 통통 튀는 애니메이션 효과 */
+  animation: bounce 2s infinite;
+}
+
+/* --- 헤딩(제목) 스타일 --- */
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* --- 문단 스타일 --- */
+p {
+  font-size: 16px;
+  line-height: 1.6; /* 줄 간격을 넓혀 가독성 향상 */
+  color: #6c757d; /* 본문 내용은 약간 연한 색으로 */
+  margin-bottom: 30px;
+}
+
+/* --- 푸터 (GitHub 링크) 스타일 --- */
+footer a {
+  display: inline-block;
+  font-size: 15px;
+  color: #ffffff;
+  background-color: #007bff; /* 파란색 계열의 버튼 */
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none; /* 밑줄 제거 */
+  font-weight: 700;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease;
+}
+
+footer a:hover {
+  background-color: #0056b3; /* 마우스를 올리면 더 진한 파란색으로 */
+  transform: scale(1.05); /* 살짝 커지는 효과 */
+}
+
+/* --- 아이콘 애니메이션 정의 --- */
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+.btn_back {
+  display: block;
+  margin: 30px auto 30px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #28a745; /* 녹색 배경 */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
