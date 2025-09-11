@@ -13,7 +13,7 @@
 .detail-container {
   border: 2px solid var(--border-color);
   border-radius: 16px;
-  padding: 4rem 3rem 3rem 3rem;
+  padding: 6rem 3rem 6rem 3rem; /* 위/아래 padding만 늘림 */
   max-width: 1200px;
   margin: 3rem auto;
   background: var(--card-background);
@@ -136,13 +136,14 @@
 }
 
 .detail-desc-box {
-  margin-top: 2.2rem;
+  margin-top: 3rem; /* 기존보다 좀더 위로 */
   border: 2px solid var(--border-color);
   border-radius: 10px;
-  padding: 1.7rem 1.5rem;
+  padding: 2.5rem 1.5rem; /* 위/아래 padding만 늘림 */
   background: #f5f8fc;
   color: var(--subtle-text-color);
   font-size: 1.15rem;
+  min-height: 220px; /* 최소 높이로 공간 확보 */
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
@@ -153,6 +154,25 @@
   color: var(--text-color);
   margin-bottom: 0.7rem;
   font-size: 1.18rem;
+}
+
+.home-btn {
+  display: block;
+  margin: 2.2rem auto 0 auto; /* 상단 여백, 좌우 자동, 하단 0 */
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 1.09rem;
+  padding: 0.48rem 2.1rem;
+  cursor: pointer;
+  opacity: 0.93;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.12);
+  transition: background 0.18s;
+}
+.home-btn:active {
+  background: #4338ca;
 }
 
 /* --- 반응형 --- */
