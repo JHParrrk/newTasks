@@ -50,14 +50,18 @@ function route(handle, pathname, response, request) {
         const handlerArgs = [response];
 
         if (routeObj.params && routeObj.params.length > 0) {
+          // 동적경로라면 params 먼저 추가
           routeObj.params.forEach((k) => handlerArgs.push(parsed.get(k)));
         }
 
-        // ⭐️ 캐시된 뷰와 쿠키를 순서대로 추가
+        // 캐시된 뷰와 쿠키
         handlerArgs.push(viewsCache[routeObj.view] || null);
         handlerArgs.push(cookies);
+        handlerArgs.push(request.method);
+        handlerArgs.push(body);
 
-        handle[pathname](...handlerArgs, request.method);
+        // ★ method와 body 모두 넘기기!
+        handle[pathname](...handlerArgs, request.method, body);
       });
       return;
     }

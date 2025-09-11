@@ -153,7 +153,8 @@ module.exports = {
     quantity,
     _view,
     cookies,
-    method
+    method,
+    body
   ) {
     // 1. 사용자 정보 검증
     let user = null;
@@ -187,42 +188,71 @@ module.exports = {
 
     const total_price = perfPrice * qty;
     const booking_date = formatDate(new Date());
-    const MAX_TICKETS_PER_USER = 100;
+    const MAX_TICKETS_PER_USER = 20;
 
-    // 3. 트랜잭션 시작 (동시성 안전)
+    // 트랜잭션 시작 (동시성 안전)
     const connection = await dbPool.getConnection();
     try {
       await connection.beginTransaction();
 
-      // 4. 사용자가 해당 공연에 이미 예매한 총 수량 조회
-      const [rows] = await connection.query(
-        `SELECT IFNULL(SUM(quantity),0) as total_booked 
-         FROM bookings 
-         WHERE user_id=? AND performance_id=?`,
-        [user.id, perfId]
+      // 1. 공연 정보/좌석 수 체크
+      const [perfRows] = await connection.query(
+        `SELECT total_seats FROM performances WHERE id=?`,
+        [perfId]
       );
-      const previouslyBooked = rows[0].total_booked || 0;
-
-      // 5. 구매 제한 체크
-      if (previouslyBooked + qty > MAX_TICKETS_PER_USER) {
+      if (perfRows.length === 0) {
         await connection.rollback();
-        response.writeHead(400, {
-          "Content-Type": "text/plain; charset=utf-8",
-        });
+        response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
         response.end(
-          `한 공연당 최대 ${MAX_TICKETS_PER_USER}장까지만 예매할 수 있습니다. (현재 ${previouslyBooked}장 예매)`
+          `<script>alert("공연 정보를 찾을 수 없습니다."); window.location.href = "/concerts";</script>`
+        );
+        return;
+      }
+      const total_seats = Number(perfRows[0].total_seats);
+
+      // 2. 공연 전체 예매된 티켓 총합 체크 (좌석 제한)
+      const [bookedRows] = await connection.query(
+        `SELECT IFNULL(SUM(quantity),0) as total_booked FROM bookings WHERE performance_id=?`,
+        [perfId]
+      );
+      const alreadyBooked = Number(bookedRows[0].total_booked) || 0;
+
+      if (alreadyBooked + qty > total_seats) {
+        await connection.rollback();
+        response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+        response.end(
+          `<script>alert("잔여 좌석이 부족합니다. 현재 남은 좌석: ${
+            total_seats - alreadyBooked
+          }석"); window.history.back();</script>`
         );
         return;
       }
 
-      // 6. 공연 좌석(재고) 체크 (필요 시 추가)
-      // 공연의 남은 좌석 수 로직을 넣고 싶다면 performances 테이블에서 total_seats와 예매된 총합을 비교하세요.
-      // console.log(total_seats);
+      // 3. 사용자별 구매 제한 체크
+      const [rows] = await connection.query(
+        `SELECT IFNULL(SUM(quantity),0) as total_booked FROM bookings WHERE user_id=? AND performance_id=?`,
+        [user.id, perfId]
+      );
+      const previouslyBooked = Number(rows[0].total_booked) || 0;
+
+      if (previouslyBooked + qty > MAX_TICKETS_PER_USER) {
+        await connection.rollback();
+        response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+        response.end(`
+  <script>
+    alert("한 공연당 최대 ${MAX_TICKETS_PER_USER}장까지만 예매할 수 있습니다.\\n(예매 시도 후 총 ${
+          previouslyBooked + qty
+        }장)");
+    window.history.back();
+  </script>
+`);
+        return;
+      }
 
       // 7. 예매 내역 저장
       await connection.query(
         `INSERT INTO bookings (user_id, performance_id, quantity, total_price, booking_date)
-         VALUES (?, ?, ?, ?, ?)`,
+       VALUES (?, ?, ?, ?, ?)`,
         [user.id, perfId, qty, total_price, booking_date]
       );
 
@@ -230,11 +260,11 @@ module.exports = {
 
       // 8. 성공 시 알림 및 이동
       const successScript = `
-        <script>
-          alert("예매가 완료되었습니다!");
-          window.location.href = "/concerts";
-        </script>
-      `;
+      <script>
+        alert("예매가 완료되었습니다!");
+        window.location.href = "/concerts";
+      </script>
+    `;
       response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
       response.write(successScript);
       response.end();

@@ -47,6 +47,7 @@ header {
 
 .user-nav {
   display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
   gap: 0.75rem;
 }
 

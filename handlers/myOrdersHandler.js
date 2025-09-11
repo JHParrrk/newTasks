@@ -2,14 +2,15 @@ const dbPool = require("../database/connect/mariadb");
 const { formatDate } = require("../commons/libraries/utils/formDate");
 
 module.exports = {
-  myOrders: async function (response, myOrders_view, cookies) {
-    console.log("myOrders 핸들러: 내 주문 페이지 요청");
+  myOrders: async function (response, myOrders_view, cookies, method, body) {
+    console.log("myOrders 핸들러: 내 주문 페이지 요청, method =", method);
 
     // 1. 로그인 체크 및 user.id 추출
     let user = null;
     if (cookies && cookies.user) {
       try {
         user = JSON.parse(Buffer.from(cookies.user, "base64").toString());
+        console.log("myOrders: user.id =", user.id);
       } catch (err) {
         console.error("쿠키 파싱 에러:", err);
       }
@@ -26,8 +27,38 @@ module.exports = {
       return;
     }
 
+    // 2. 예매취소(삭제) 요청 처리
+    if (method === "POST") {
+      // body 예: booking_number=1008
+      console.log("수신된 body =", body);
+      const params = new URLSearchParams(body);
+      const booking_number = params.get("booking_number");
+      console.log("예매 취소 요청, booking_number =", booking_number);
+
+      try {
+        // 실제 삭제 쿼리 실행!
+        const [result] = await dbPool.query(
+          `DELETE FROM bookings WHERE id = ? AND user_id = ?`,
+          [booking_number, user.id]
+        );
+        console.log("삭제 결과:", result);
+
+        response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+        response.end(
+          `<script>alert("예매취소가 완료되었습니다.");window.location.href='/myOrders';</script>`
+        );
+      } catch (err) {
+        console.error("삭제 쿼리 에러:", err);
+        response.writeHead(500, { "Content-Type": "text/html; charset=utf-8" });
+        response.end(
+          `<script>alert("예매취소 중 오류가 발생했습니다.");window.location.href='/myOrders';</script>`
+        );
+      }
+      return;
+    }
+
+    // 3. 주문 내역 리스트 HTML 생성
     try {
-      // 2. DB에서 해당 user의 예매 내역 조회
       const [orders] = await dbPool.query(
         `
         SELECT
@@ -51,7 +82,6 @@ module.exports = {
         [user.id]
       );
 
-      // 3. 주문 내역 리스트 HTML 생성
       const ordersHtml =
         orders.length > 0
           ? orders
@@ -70,7 +100,12 @@ module.exports = {
                 "ko-KR"
               )}원</td>
               <td class="order-td">
-                <button class="cancel-btn" type="button">예매취소</button>
+                <form method="POST" action="/myOrders" style="display:inline;">
+                  <input type="hidden" name="booking_number" value="${
+                    order.booking_number
+                  }">
+                  <button class="cancel-btn" type="submit">예매취소</button>
+                </form>
               </td>
             </tr>
           `
@@ -82,7 +117,6 @@ module.exports = {
       </tr>
     `;
 
-      // 4. 뷰에 주문 내역 치환
       const finalHtml = myOrders_view.replace("<!--ORDER_LIST-->", ordersHtml);
 
       response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
