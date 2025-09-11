@@ -1,5 +1,4 @@
-// router.js (최종 수정본)
-// handlerArgs에 view와 method를 push하는 로직은 requestHandler.js로 옮겼습니다.
+// router.js
 
 const url = require("url");
 const path = require("path");
@@ -8,7 +7,6 @@ const { routes, dynamicRoutes } = require("./commons/constants/routes.js");
 function findRoute(pathname) {
   return routes.find((r) => r.url === pathname);
 }
-
 function findDynamicRoute(pathname) {
   for (const r of dynamicRoutes) {
     const match = pathname.match(r.pattern);
@@ -67,7 +65,26 @@ function route(handle, pathname, response, request) {
     return;
   }
 
-  // ... (나머지 로직은 그대로) ...
+  // 4. 정규식 동적 핸들러 처리
+  const drResult = findDynamicRoute(pathname);
+  if (drResult) {
+    const { route: drObj, params } = drResult;
+    const handler = handle[drObj.pattern];
+    console.log(`🔍 동적 라우트 핸들러 검색 시도. 패턴: ${drObj.pattern}`);
+    console.log(`🔍 핸들러 존재 여부: ${!!handler}`);
+    if (typeof handler === "function") {
+      handler(response, ...params);
+      return;
+    }
+  }
+
+  // 5. 404 에러 처리
+  console.log(
+    `'${pathname}'에 해당하는 핸들러를 찾을 수 없습니다. (404 Not Found)`
+  );
+  response.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
+  response.write("페이지를 찾을 수 없습니다. (404 Not Found)");
+  response.end();
 }
 
 exports.route = route;
