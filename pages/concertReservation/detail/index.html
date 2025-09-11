@@ -38,11 +38,23 @@
             <span>공연 가격</span>
             <div><!--PERFORMANCE_PRICE--></div>
           </div>
-          <form class="detail-reserve-form">
+          <form class="detail-reserve-form" method="POST" action="/reserve">
+            <input
+              type="hidden"
+              name="performance_id"
+              value="<!--PERFORMANCE_ID-->"
+            />
+            <input
+              type="hidden"
+              name="price"
+              value="<!--PERFORMANCE_PRICE_VALUE-->"
+            />
             <input
               type="number"
+              name="quantity"
               min="1"
               value="1"
+              max="100"
               class="reserve-qty-input"
               placeholder="수량"
             />

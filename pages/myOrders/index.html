@@ -2,30 +2,29 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>주문 내역</title>
+    <title>예매 내역</title>
     <link rel="stylesheet" href="/styles/myOrders.css" />
   </head>
   <body>
     <div class="container">
-      <h2 class="order-title">주문 내역</h2>
-      <div class="order-list">
-        <!-- 주문 카드 예시 1 -->
-        <div class="order-card">
-          <div class="order-row">
-            <div class="order-cell order-id">예매 번호</div>
-            <div class="order-cell order-date">예매 일자</div>
-            <div class="order-cell order-show">예매 공연명</div>
-            <div class="order-cell order-user">
-              예매자 이름<br />
-              예매자 이메일
-            </div>
-            <div class="order-cell order-qty">예매 수량</div>
-            <div class="order-cell order-price">총 예매 가격</div>
-          </div>
-          <hr />
-          </div>
-        </div>
-      </div>
+      <h2 class="order-title">예매 내역</h2>
+      <table class="order-table">
+        <thead>
+          <tr>
+            <th class="order-th">예매 번호</th>
+            <th class="order-th">예매 일자</th>
+            <th class="order-th">공연명</th>
+            <th class="order-th">예매자 이름</th>
+            <th class="order-th">예매자 이메일</th>
+            <th class="order-th">수량</th>
+            <th class="order-th">총 예매 가격</th>
+            <th class="order-th">비고</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--ORDER_LIST-->
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

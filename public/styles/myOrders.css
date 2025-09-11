@@ -1,26 +1,21 @@
 :root {
   --primary-color: #4f46e5;
   --background-color: #f3f4f6;
-  --card-background: #ffffff;
+  --card-background: #fff;
   --text-color: #1f2937;
   --subtle-text-color: #6b7280;
-  --border-color: #374151;
-  --focus-ring: rgba(79, 70, 229, 0.2);
-
-  --shadow-color: rgba(0, 0, 0, 0.06);
-  --shadow-elevation: 0 4px 12px var(--shadow-color);
-  --radius: 8px;
-
-  --container-max-width: 1200px;
-  --container-padding: 2.5rem 2rem;
-  --gap-base: 1.5rem;
+  --border-color: #d1d5db;
+  --radius: 14px;
+  --container-max-width: 1200px; /* 더 넓게! */
+  --container-padding: 2.4rem 2.2rem; /* 패딩도 살짝 넓게 */
+  --header-bg: #eef0f8;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Noto Sans KR", sans-serif;
-  background-color: var(--background-color);
+  font-family: "Noto Sans KR", "Segoe UI", Arial, sans-serif;
+  background: var(--background-color);
   color: var(--text-color);
   display: flex;
   align-items: center;
@@ -28,100 +23,111 @@ body {
 }
 
 .container {
-  width: 95vw;
+  width: 99vw;
   max-width: var(--container-max-width);
-  background-color: var(--card-background);
-  border: 2px solid var(--border-color);
+  background: var(--card-background);
   border-radius: var(--radius);
+  box-shadow: 0 4px 18px rgba(79, 70, 229, 0.07);
   padding: var(--container-padding);
+  border: 1.5px solid var(--border-color);
   box-sizing: border-box;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .order-title {
-  text-align: right;
-  color: var(--subtle-text-color);
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 2.5rem;
-  letter-spacing: 1px;
-}
-
-.order-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-
-.order-card {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.order-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: flex-start;
-  align-items: stretch;
-}
-
-.order-cell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: var(--subtle-text-color);
-  background-color: var(--card-background);
-  border: 2px solid var(--border-color);
-  box-shadow: var(--shadow-elevation);
-  border-radius: var(--radius);
-  min-width: 140px;
-  min-height: 90px;
-  padding: 1.2rem;
   text-align: center;
+  color: var(--primary-color);
+  font-size: 1.65rem; /* 더 작게 */
+  font-weight: 700;
+  margin-bottom: 2rem;
+  letter-spacing: 0.7px;
 }
 
-.order-id {
-  min-width: 120px;
-}
-
-hr {
-  border: none;
-  border-top: 2px solid var(--border-color);
-  margin: 2rem 0 1rem 0;
+.order-table {
+  border-collapse: separate;
+  border-spacing: 0;
   width: 100%;
-  background: transparent;
+  margin: 0 auto;
+  box-shadow: 0 1px 8px rgba(79, 70, 229, 0.09);
+  background: var(--card-background);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.order-th,
+.order-td {
+  padding: 0.85rem 0.5rem; /* 더 작게 */
+  font-size: 0.98rem; /* 더 작게 */
+  text-align: center;
+  border-bottom: 1.2px solid var(--border-color);
+}
+
+.order-th {
+  background: var(--header-bg);
+  color: var(--primary-color);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.order-td {
+  color: var(--text-color);
+  font-weight: 400;
+  background: var(--card-background);
+  transition: background 0.14s;
+  word-break: break-word; /* 줄바꿈으로 글씨 샘 방지 */
+}
+
+.order-tr:last-child .order-td {
+  border-bottom: none;
+}
+
+.order-tr:hover .order-td {
+  background: #f6f8fb;
+}
+
+.cancel-btn {
+  background: #e53e3e;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.93rem;
+  padding: 0.44rem 1.18rem;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: background 0.15s;
+}
+.cancel-btn:active {
+  background: #c53030;
 }
 
 @media (max-width: 900px) {
   .container {
-    padding: 1.5rem 0.5rem;
-  }
-  .order-cell {
-    min-width: 100px;
-    min-height: 60px;
-    font-size: 1rem;
-    padding: 0.7rem;
+    padding: 1rem 0.2rem;
   }
   .order-title {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     margin-bottom: 1rem;
   }
-  .order-row {
-    gap: 1rem;
+  .order-th,
+  .order-td {
+    padding: 0.5rem 0.17rem;
+    font-size: 0.87rem;
   }
 }
 
-/* 모바일 대응 */
 @media (max-width: 600px) {
-  .order-row {
-    flex-direction: column;
-    gap: 0.5rem;
+  .order-table,
+  .order-th,
+  .order-td {
+    font-size: 0.81rem;
   }
-  .order-cell {
-    min-width: unset;
-    width: 100%;
+  .order-table {
+    box-shadow: none;
+  }
+  .order-th,
+  .order-td {
+    padding: 0.31rem 0.07rem;
   }
 }

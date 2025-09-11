@@ -11,6 +11,7 @@ const {
 const {
   concertReservationMain,
   performanceDetail,
+  reservePerformance,
 } = require("../../handlers/concertHandler.js");
 const { serveStatic } = require("../../handlers/staticHandler.js");
 const {
@@ -83,6 +84,12 @@ const routes = [
     url: "/logout",
     handler: logout, // ⭐ 수정: 직접 연결
     view: null,
+  },
+  {
+    url: "/reserve",
+    handler: reservePerformance, // 아래에서 구현할 함수
+    view: null, // 성공 시 별도의 뷰가 필요하다면 지정
+    params: ["performance_id", "price", "quantity"],
   },
 ];
 

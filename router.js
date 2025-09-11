@@ -2,7 +2,6 @@
 
 const url = require("url");
 const path = require("path");
-const fs = require("fs"); // ⭐️ 파일 시스템 모듈 추가
 const { routes, dynamicRoutes } = require("./commons/constants/routes.js");
 const parseCookie = require("./commons/libraries/utils/parseCookie.js");
 const { getViewsCache } = require("./requestHandler"); // 뷰 캐시 가져오기 함수
