@@ -1,11 +1,8 @@
-// requestHandler.js (최종 수정본)
-// 핸들러가 기대하는 인자 순서에 맞게 view를 주입합니다.
-
 const fs = require("fs").promises;
 const path = require("path");
 const { routes, dynamicRoutes } = require("./commons/constants/routes.js");
 
-let viewsCache = {}; // HTML 파일 캐시
+let viewsCache = {};
 
 async function init() {
   const allRoutes = [...routes, ...dynamicRoutes];
@@ -28,28 +25,36 @@ async function init() {
     if (route.url === "/static") {
       handle[route.url] = route.handler;
     } else {
-      // ⭐ 수정: 뷰(view)를 핸들러가 기대하는 위치에 주입합니다.
       handle[route.url] = (...args) => {
         const handlerArgs = [args[0]]; // response
-        const viewIndex = route.params ? route.params.length + 1 : 1; // view 파라미터 위치 계산
-        handlerArgs.push(...args.slice(1, viewIndex)); // params
-        if (route.view) {
-          handlerArgs.push(viewsCache[route.view]); // view 주입
-        }
-        handlerArgs.push(...args.slice(viewIndex)); // method
+        const method = args[args.length - 1];
+        const cookies = args[args.length - 2];
+        const view = args[args.length - 3];
+        const params = args.slice(1, -3);
+
+        handlerArgs.push(...params);
+        handlerArgs.push(view);
+        handlerArgs.push(cookies);
+        handlerArgs.push(method);
+
         route.handler(...handlerArgs);
       };
     }
   });
 
   dynamicRoutes.forEach((dr) => {
-    // ⭐ 수정: 동적 라우트에도 view 주입 로직을 적용합니다.
     handle[dr.pattern] = (...args) => {
-      const handlerArgs = [args[0]]; // response
-      handlerArgs.push(...args.slice(1)); // params
-      if (dr.view) {
-        handlerArgs.push(viewsCache[dr.view]); // view 주입
-      }
+      const handlerArgs = [args[0]];
+      const method = args[args.length - 1];
+      const cookies = args[args.length - 2];
+      const view = args[args.length - 3];
+      const params = args.slice(1, -3);
+
+      handlerArgs.push(...params);
+      handlerArgs.push(view);
+      handlerArgs.push(cookies);
+      handlerArgs.push(method);
+
       dr.handler(...handlerArgs);
     };
   });
@@ -57,4 +62,11 @@ async function init() {
   return handle;
 }
 
-exports.init = init;
+function getViewsCache() {
+  return viewsCache;
+}
+
+module.exports = {
+  init,
+  getViewsCache,
+};

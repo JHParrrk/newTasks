@@ -7,8 +7,22 @@ const {
 module.exports = {
   concertReservationMain: async function (
     response,
-    concertReservationMain_view
+    concertReservationMain_view,
+    cookies,
+    method
   ) {
+    let user = null;
+    if (cookies && cookies.user) {
+      try {
+        user = JSON.parse(Buffer.from(cookies.user, "base64").toString());
+        console.log("user.id:", user.id);
+        console.log("user.email:", user.email);
+        console.log("user.name:", user.name);
+      } catch (err) {
+        console.error("쿠키 파싱 에러:", err);
+      }
+    }
+
     console.log("concertReservationMain 핸들러: 서버 사이드 렌더링 시작");
     if (!concertReservationMain_view) {
       console.error("concertReservationMain_view가 로드되지 않았습니다!");
@@ -16,6 +30,19 @@ module.exports = {
       response.end("서버 오류: 뷰 템플릿을 로드할 수 없습니다.");
       return;
     }
+
+    // 1. 사용자 네비게이션 영역 HTML 생성
+    let userNavHtml;
+    if (user) {
+      userNavHtml = `
+      <span class="username">${user.name}님 안녕하세요!</span>
+      <a href="/myOrders" class="nav-link primary">주문 내역</a>
+      <a href="/logout" class="nav-link">로그아웃</a>
+    `;
+    } else {
+      userNavHtml = `<a href="/login" class="nav-link">로그인</a>`;
+    }
+
     try {
       const [performances] = await dbPool.query(
         "SELECT id, title, performance_date, price, image_path FROM performances ORDER BY performance_date ASC"
@@ -46,10 +73,9 @@ module.exports = {
         )
         .join("");
       // ⭐ 핵심: 플레이스홀더 이름을 HTML 템플릿과 동일하게 수정했습니다.
-      const finalHtml = concertReservationMain_view.replace(
-        "<!--PERFORMANCE_CARDS-->",
-        performanceCardsHtml
-      );
+      const finalHtml = concertReservationMain_view
+        .replace("<!--USER_NAV-->", userNavHtml)
+        .replace("<!--PERFORMANCE_CARDS-->", performanceCardsHtml);
       response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
       response.write(finalHtml);
       response.end();

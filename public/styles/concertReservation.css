@@ -139,6 +139,13 @@ header {
   margin: 0;
 }
 
+.username {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-right: 1rem;
+}
+
 /* --- 반응형 --- */
 @media (max-width: 640px) {
   .container {
