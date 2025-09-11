@@ -1,0 +1,53 @@
+<!-- class/01-html/02-signup.html -->
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/styles/registration.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="outer-box">
+      <div class="container">
+        <h1>회원 가입</h1>
+        <form
+          class="signup-form"
+          autocomplete="off"
+          method="POST"
+          action="/registration"
+        >
+          <div class="input-row">
+            <input type="text" id="name" name="name" placeholder="이름" />
+          </div>
+          <div class="input-row">
+            <input type="text" id="email" name="email" placeholder="이메일" />
+            <button type="button" class="cert-btn">인증</button>
+          </div>
+          <div class="input-row">
+            <input
+              type="password"
+              id="password1"
+              name="password"
+              placeholder="비밀번호"
+            />
+            <button type="button" class="cert-btn">인증</button>
+          </div>
+          <div class="input-row">
+            <input
+              type="password"
+              id="password2"
+              placeholder="비밀번호 재확인"
+            />
+          </div>
+          <button type="submit" class="submit-btn">회원가입</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

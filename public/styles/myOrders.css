@@ -1,0 +1,127 @@
+:root {
+  --primary-color: #4f46e5;
+  --background-color: #f3f4f6;
+  --card-background: #ffffff;
+  --text-color: #1f2937;
+  --subtle-text-color: #6b7280;
+  --border-color: #374151;
+  --focus-ring: rgba(79, 70, 229, 0.2);
+
+  --shadow-color: rgba(0, 0, 0, 0.06);
+  --shadow-elevation: 0 4px 12px var(--shadow-color);
+  --radius: 8px;
+
+  --container-max-width: 1200px;
+  --container-padding: 2.5rem 2rem;
+  --gap-base: 1.5rem;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 95vw;
+  max-width: var(--container-max-width);
+  background-color: var(--card-background);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: var(--container-padding);
+  box-sizing: border-box;
+}
+
+.order-title {
+  text-align: right;
+  color: var(--subtle-text-color);
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 2.5rem;
+  letter-spacing: 1px;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.order-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.order-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.order-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--subtle-text-color);
+  background-color: var(--card-background);
+  border: 2px solid var(--border-color);
+  box-shadow: var(--shadow-elevation);
+  border-radius: var(--radius);
+  min-width: 140px;
+  min-height: 90px;
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.order-id {
+  min-width: 120px;
+}
+
+hr {
+  border: none;
+  border-top: 2px solid var(--border-color);
+  margin: 2rem 0 1rem 0;
+  width: 100%;
+  background: transparent;
+}
+
+@media (max-width: 900px) {
+  .container {
+    padding: 1.5rem 0.5rem;
+  }
+  .order-cell {
+    min-width: 100px;
+    min-height: 60px;
+    font-size: 1rem;
+    padding: 0.7rem;
+  }
+  .order-title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .order-row {
+    gap: 1rem;
+  }
+}
+
+/* 모바일 대응 */
+@media (max-width: 600px) {
+  .order-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .order-cell {
+    min-width: unset;
+    width: 100%;
+  }
+}

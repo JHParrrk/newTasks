@@ -1,0 +1,160 @@
+/* registration.css */
+
+/* registration.css */
+
+:root {
+  /* Colors */
+  --primary-color: #4f46e5; /* Indigo-600 */
+  --background-color: #f3f4f6; /* Gray-100 */
+  --card-background: #ffffff; /* White */
+  --text-color: #1f2937; /* Gray-800 */
+  --subtle-text-color: #6b7280; /* Gray-500 */
+  --border-color: #e5e7eb; /* Gray-200 */
+  --focus-ring: rgba(79, 70, 229, 0.2);
+
+  /* Shadows & Radius */
+  --shadow-color: rgba(0, 0, 0, 0.06);
+  --shadow-elevation: 0 4px 12px var(--shadow-color);
+  --radius: 8px;
+
+  /* Sizing */
+  --input-height: 48px;
+  --btn-height: 48px;
+  --card-max-width: 900px;
+  --gap-base: 1.5rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Outer Box: 배경 레이어 */
+.outer-box {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* Inner Card: 실제 폼 래퍼 */
+.container {
+  width: 95vw; /* 95% of viewport width */
+  max-width: var(--card-max-width);
+  background-color: var(--card-background);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-elevation);
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-base);
+}
+
+/* 제목 */
+h1 {
+  margin: 0;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+/* 폼 레이아웃 */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-base);
+}
+
+/* Text Inputs */
+.input-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.input-row input[type="text"],
+.input-row input[type="password"] {
+  flex: 1 1 0;
+  height: var(--input-height);
+  padding: 0 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background-color: var(--card-background);
+  box-shadow: var(--shadow-elevation);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-row input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+/* 인증 버튼 */
+.cert-btn {
+  flex: 0 0 120px;
+  height: var(--btn-height);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  background: none;
+  border: 1px solid var(--primary-color);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.cert-btn:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+/* 제출 버튼 */
+.submit-btn {
+  width: 100%;
+  height: var(--btn-height);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  box-shadow: var(--shadow-elevation);
+  transition: background 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #4338ca; /* Indigo-700 */
+}
+
+/* 데스크탑 전용: 최대 너비 고정 */
+@media (min-width: 1200px) {
+  .container {
+    width: var(--card-max-width);
+  }
+}
+
+/* 반응형: 모바일 시에도 넓은 레이아웃 유지 */
+@media (max-width: 800px) {
+  .container {
+    padding: 2.5rem 1rem;
+    width: 96vw;
+  }
+}

@@ -1,0 +1,208 @@
+/* concertDetail.css */
+
+:root {
+  --primary-color: #5a67d8;
+  --background-color: #f7fafc;
+  --card-background: #ffffff;
+  --text-color: #2d3748;
+  --subtle-text-color: #718096;
+  --border-color: #a0aec0;
+  --shadow-color: rgba(0, 0, 0, 0.07);
+}
+
+.detail-container {
+  border: 2px solid var(--border-color);
+  border-radius: 16px;
+  padding: 4rem 3rem 3rem 3rem;
+  max-width: 1200px;
+  margin: 3rem auto;
+  background: var(--card-background);
+  box-sizing: border-box;
+}
+
+.detail-title {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-bottom: 3rem;
+  text-align: center; /* 가운데 정렬 */
+  letter-spacing: 1px;
+}
+
+.detail-main {
+  display: flex;
+  gap: 4rem;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+}
+
+.detail-image-box {
+  flex: 1.3;
+  min-width: 420px;
+  min-height: 320px;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f6fa;
+  border: 3px solid var(--border-color);
+  border-radius: 16px;
+  font-size: 1.4rem;
+  color: var(--subtle-text-color);
+  overflow: hidden;
+  max-height: 390px;
+}
+
+.detail-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.detail-info-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 340px;
+}
+
+.detail-info-item {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  background: #f5f8fc;
+  font-size: 1.22rem;
+  color: var(--subtle-text-color);
+  box-sizing: border-box;
+}
+
+.detail-info-item span {
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  color: var(--text-color);
+  font-size: 1.15rem;
+}
+
+.detail-info-item div {
+  font-weight: 600;
+  font-size: 1.22rem;
+  color: var(--primary-color);
+  word-break: keep-all;
+}
+
+.detail-reserve-form {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 0.7rem;
+}
+
+.reserve-qty-input {
+  flex: 1;
+  padding: 1rem 1.4rem;
+  font-size: 1.15rem;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  color: var(--text-color);
+  background: #f7fafc;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.reserve-qty-input:focus {
+  border-color: var(--primary-color);
+}
+
+.reserve-btn {
+  flex: 1;
+  padding: 1rem 1.4rem;
+  font-size: 1.15rem;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--card-background);
+  color: var(--primary-color);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.reserve-btn:hover {
+  background: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+}
+
+.detail-desc-box {
+  margin-top: 2.2rem;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1.7rem 1.5rem;
+  background: #f5f8fc;
+  color: var(--subtle-text-color);
+  font-size: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.detail-desc-box span {
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 0.7rem;
+  font-size: 1.18rem;
+}
+
+/* --- 반응형 --- */
+@media (max-width: 1200px) {
+  .detail-container {
+    padding: 2rem 1rem 2rem 1rem;
+    max-width: 98vw;
+  }
+  .detail-main {
+    gap: 2rem;
+  }
+  .detail-image-box {
+    min-width: 250px;
+    min-height: 180px;
+    max-height: 250px;
+  }
+  .detail-info-box {
+    min-width: 180px;
+  }
+}
+
+@media (max-width: 900px) {
+  .detail-main {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .detail-image-box {
+    min-width: 180px;
+    aspect-ratio: 4/3;
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 600px) {
+  .detail-container {
+    padding: 1rem;
+  }
+  .detail-title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .detail-main {
+    gap: 1rem;
+  }
+  .detail-info-item,
+  .detail-desc-box {
+    padding: 0.8rem 0.6rem;
+    font-size: 1rem;
+  }
+  .detail-info-box {
+    min-width: unset;
+  }
+}

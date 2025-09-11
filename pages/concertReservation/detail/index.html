@@ -1,0 +1,59 @@
+<!-- concertReservation/detail/index.html -->
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><!--PERFORMANCE_TITLE--> 상세 페이지</title>
+    <link rel="stylesheet" href="/styles/concertReservation.css" />
+    <link rel="stylesheet" href="/styles/concertDetail.css" />
+    <!-- Google Fonts 추가 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container detail-container">
+      <h1 class="detail-title">
+        <!--PERFORMANCE_TITLE-->
+      </h1>
+      <div class="detail-main">
+        <div class="detail-image-box">
+          <!--PERFORMANCE_IMAGE-->
+        </div>
+        <div class="detail-info-box">
+          <div class="detail-info-item">
+            <span>공연명</span>
+            <div><!--PERFORMANCE_TITLE--></div>
+          </div>
+          <div class="detail-info-item">
+            <span>날짜</span>
+            <div><!--PERFORMANCE_DATE--></div>
+          </div>
+          <div class="detail-info-item">
+            <span>공연 가격</span>
+            <div><!--PERFORMANCE_PRICE--></div>
+          </div>
+          <form class="detail-reserve-form">
+            <input
+              type="number"
+              min="1"
+              value="1"
+              class="reserve-qty-input"
+              placeholder="수량"
+            />
+            <button type="submit" class="reserve-btn">예매하기</button>
+          </form>
+        </div>
+      </div>
+      <div class="detail-desc-box">
+        <span>공연 소개</span>
+        <div><!--PERFORMANCE_DESCRIPTION--></div>
+      </div>
+    </div>
+  </body>
+</html>
